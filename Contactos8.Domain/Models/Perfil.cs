@@ -14,11 +14,11 @@
             get;
             set;
         }
-        /*public string ImagePerfil
+        public string ImagePerfil
         {
             get;
             set;
-        }*/
+        }
         [Required(ErrorMessage = "The fiel {0} is required.")]
         [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lengthh")]
         [Index("Perfil_Name_Index")]

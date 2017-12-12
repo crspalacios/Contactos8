@@ -12,6 +12,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Perfil.ImagePerfil)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Perfil.Name)
         </th>
         <th>
@@ -25,6 +28,12 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @if (!string.IsNullOrEmpty(item.BrouchureImage))
+            {
+                <img src="@Url.Content(item.BrouchureImage)" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
+            }
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Perfil.Name)
         </td>

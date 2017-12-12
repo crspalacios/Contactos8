@@ -6,6 +6,8 @@
     using System.Web.Mvc;
     using Contactos8.Backend.Models;
     using Contactos8.Domain.Models;
+    using Contactos8.Backend.Helpers;
+    using System;
 
     [Authorize]
     public class PerfilsController : Controller
@@ -25,7 +27,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Perfil perfil = await db.Perfils.FindAsync(id);
+            var  perfil = await db.Perfils.FindAsync(id);
             if (perfil == null)
             {
                 return HttpNotFound();
@@ -44,16 +46,48 @@
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "PerfilId,Name,LastName")] Perfil perfil)
+        public async Task<ActionResult> Create(PerfilView view)
         {
             if (ModelState.IsValid)
             {
+
+                var pic = string.Empty;
+                var folder = "~/Content/ImagePerfil";
+
+                if (view.ImagePerfilFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.ImagePerfilFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+
+                var perfil = ToPerfil(view);
+                perfil.ImagePerfil = pic;
+
                 db.Perfils.Add(perfil);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(perfil);
+            return View(view);
+        }
+
+        private Perfil ToPerfil(PerfilView view)
+        {
+            return new Perfil
+            {
+                Name = view.Name,
+                LastName = view.LastName,
+                ImagePerfil = view.ImagePerfil,
+                PerfilId = view.PerfilId,
+                Addresses = view.Addresses,
+                Brouchures = view.Brouchures,
+                Emails = view.Emails,
+                Jobs = view.Jobs,
+                Phones = view.Phones,
+                Socials = view.Socials, 
+                Urls = view.Urls,
+
+            };
         }
 
         // GET: Perfils/Edit/5
@@ -68,7 +102,27 @@
             {
                 return HttpNotFound();
             }
-            return View(perfil);
+            var view = ToView(perfil);
+            return View(view);
+        }
+
+        private PerfilView ToView(Perfil perfil)
+        {
+            return new PerfilView
+            {
+                Name = perfil.Name,
+                LastName = perfil.LastName,
+                ImagePerfil = perfil.ImagePerfil,
+                PerfilId = perfil.PerfilId,
+                Addresses = perfil.Addresses,
+                Brouchures = perfil.Brouchures,
+                Emails = perfil.Emails,
+                Jobs = perfil.Jobs,
+                Phones = perfil.Phones,
+                Socials = perfil.Socials,
+                Urls = perfil.Urls,
+
+            };
         }
 
         // POST: Perfils/Edit/5
@@ -76,15 +130,27 @@
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "PerfilId,Name,LastName")] Perfil perfil)
+        public async Task<ActionResult> Edit(PerfilView view)
         {
             if (ModelState.IsValid)
             {
+                var pic = view.ImagePerfil;
+                var folder = "~/Content/ImagePerfil";
+
+                if (view.ImagePerfilFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.ImagePerfilFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+
+                var perfil = ToPerfil(view);
+                perfil.ImagePerfil = pic;
+
                 db.Entry(perfil).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(perfil);
+            return View(view);
         }
 
         // GET: Perfils/Delete/5
