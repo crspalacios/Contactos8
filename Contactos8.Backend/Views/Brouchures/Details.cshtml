@@ -1,0 +1,42 @@
+﻿@model Contactos8.Domain.Models.Brouchure
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Brouchure</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Perfil.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Perfil.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BrochureDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BrochureDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BrouchureId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

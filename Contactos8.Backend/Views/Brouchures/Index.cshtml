@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Contactos8.Domain.Models.Brouchure>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Perfil.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BrochureDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastUpdate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Perfil.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BrochureDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastUpdate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BrouchureId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BrouchureId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BrouchureId })
+        </td>
+    </tr>
+}
+
+</table>

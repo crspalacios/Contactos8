@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Contactos8.Domain.Models.Url>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Perfil.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DescriptionUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NameUrl)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Perfil.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DescriptionUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameUrl)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UrlId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UrlId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UrlId })
+        </td>
+    </tr>
+}
+
+</table>
